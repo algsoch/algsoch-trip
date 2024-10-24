@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Famous Places in India</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #4A90E2;
+        }
+        #places {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .place {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin: 10px;
+            padding: 10px;
+            width: 150px;
+            text-align: center;
+            transition: transform 0.2s;
+        }
+        .place:hover {
+            transform: scale(1.05);
+        }
+        #finalDestination {
+            display: none;
+            text-align: center;
+            font-size: 2em;
+            margin-top: 20px;
+            padding: 20px;
+            border: 2px solid #4A90E2;
+            border-radius: 10px;
+            background-color: #e7f3fe;
+            animation: fadeIn 1s;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Famous Places in India</h1>
+    <div id="places"></div>
+    
+    <button onclick="chooseDestination()">Choose a Final Destination</button>
+    
+    <div id="finalDestination"></div>
+
+    <script>
+        const places = [
+            "Taj Mahal, Agra",
+            "Hawa Mahal, Jaipur",
+            "Golden Temple, Amritsar",
+            "Gateway of India, Mumbai",
+            "Leh-Ladakh, Jammu & Kashmir",
+            "Jaipur City Palace, Jaipur",
+            "Qutub Minar, Delhi",
+            "Red Fort, Delhi",
+            "Ajanta Caves, Maharashtra",
+            "Ellora Caves, Maharashtra",
+            "Kerala Backwaters, Kerala",
+            "Ranthambore National Park, Rajasthan",
+            "Kaziranga National Park, Assam",
+            "Mysore Palace, Mysuru",
+            "Victoria Memorial, Kolkata",
+            "Humayun's Tomb, Delhi",
+            "Khajuraho Temples, Madhya Pradesh",
+            "Rishikesh, Uttarakhand",
+            "Varanasi, Uttar Pradesh",
+            "Darjeeling, West Bengal",
+            "Mahabalipuram, Tamil Nadu",
+            "Pondicherry (Puducherry)",
+            "Kolkata's Howrah Bridge, Kolkata",
+            "Nubra Valley, Ladakh",
+            "Sundarbans, West Bengal",
+            "Bodh Gaya, Bihar",
+            "Ajmer Sharif Dargah, Rajasthan",
+            "Golkonda Fort, Hyderabad",
+            "Jim Corbett National Park, Uttarakhand",
+            "Nainital, Uttarakhand",
+            "Andaman and Nicobar Islands",
+            "Kumarakom, Kerala",
+            "Ajanta Caves, Maharashtra",
+            "Ladakh, Jammu & Kashmir",
+            "Mahabaleshwar, Maharashtra",
+            "Hampi, Karnataka",
+            "Coorg, Karnataka",
+            "Jaisalmer Fort, Rajasthan",
+            "Bikaner, Rajasthan",
+            "Chennai Marina Beach, Tamil Nadu",
+            "Tawang, Arunachal Pradesh",
+            "Shillong, Meghalaya",
+            "Kumarakom Bird Sanctuary, Kerala",
+            "Khajjiar, Himachal Pradesh",
+            "Lansdowne, Uttarakhand",
+            "Udaipur City Palace, Rajasthan",
+            "Panchgani, Maharashtra",
+            "Rani Ki Vav, Gujarat",
+            "Gandhi Ashram, Ahmedabad",
+            "Kaziranga National Park, Assam",
+            "Tawang Monastery, Arunachal Pradesh",
+            "Mahabodhi Temple, Bodh Gaya",
+            "Dharamshala, Himachal Pradesh",
+            "Ranthambore Fort, Rajasthan",
+            "Shimla, Himachal Pradesh",
+            "Wayanad, Kerala",
+            "Kanyakumari, Tamil Nadu",
+            "Mahabalipuram, Tamil Nadu",
+            "Patan, Gujarat",
+            "Spiti Valley, Himachal Pradesh",
+            "Kutch, Gujarat",
+            "Gwalior Fort, Madhya Pradesh",
+            "Nashik, Maharashtra",
+            "Kodaikanal, Tamil Nadu",
+            "Agra Fort, Agra",
+            "Kolukkumalai, Tamil Nadu",
+            "Chandni Chowk, Delhi",
+            "Maheshwar, Madhya Pradesh",
+            "Jodhpur, Rajasthan",
+            "Kolkata's Victoria Memorial, Kolkata",
+            "Munnar, Kerala",
+            "Coorg, Karnataka",
+            "Palani, Tamil Nadu",
+            "Kanha National Park, Madhya Pradesh",
+            "Hampi, Karnataka",
+            "Amritsar, Punjab",
+            "Bhopal, Madhya Pradesh",
+            "Ajmer, Rajasthan",
+            "Rishikesh, Uttarakhand",
+            "Tawang, Arunachal Pradesh",
+            "Mahabodhi Temple, Bodh Gaya",
+            "Bhuj, Gujarat",
+            "Diu, Daman and Diu",
+            "Chikmagalur, Karnataka",
+            "Chhatarpur Temple, Delhi",
+            "Rishikesh, Uttarakhand",
+            "Kolhapur, Maharashtra",
+            "Murud-Janjira Fort, Maharashtra",
+            "Jaisalmer, Rajasthan",
+            "Gulmarg, Jammu & Kashmir",
+            "Sonmarg, Jammu & Kashmir",
+            "Maheshwar, Madhya Pradesh",
+            "Kumarakom, Kerala",
+            "Nainital, Uttarakhand",
+            "Ranthambore National Park, Rajasthan",
+            "Khajuraho, Madhya Pradesh",
+            "Chennai, Tamil Nadu",
+            "Varanasi, Uttar Pradesh",
+            "Bodh Gaya, Bihar"
+        ];
+
+        const placesContainer = document.getElementById("places");
+
+        // Populate places
+        places.forEach(place => {
+            const placeDiv = document.createElement("div");
+            placeDiv.className = "place";
+            placeDiv.textContent = place;
+            placesContainer.appendChild(placeDiv);
+        });
+
+        function chooseDestination() {
+            const randomIndex = Math.floor(Math.random() * places.length);
+            const finalDestination = places[randomIndex];
+            const finalDestinationDiv = document.getElementById("finalDestination");
+
+            finalDestinationDiv.textContent = "Final Destination: " + finalDestination;
+            finalDestinationDiv.style.display = "block";
+
+            // Optional: Resetting animation by removing and adding the class
+            finalDestinationDiv.classList.remove("fadeIn");
+            void finalDestinationDiv.offsetWidth; // Trigger reflow
+            finalDestinationDiv.classList.add("fadeIn");
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Destination Selector</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            color: #333;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            color: #0066cc;
+        }
+        input[type="number"] {
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 20px;
+            width: 50%;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        table {
+            margin: 20px auto;
+            border-collapse: collapse;
+            width: 80%;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+        #finalDestination {
+            font-size: 20px;
+            color: green;
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Travel Destination Selector</h1>
+    <label for="numSelections">Enter the number of times to select:</label><br>
+    <input type="number" id="numSelections" min="1" placeholder="Number of selections"><br>
+    <button onclick="selectDestinations()">Select Destinations</button>
+
+    <div id="finalDestination"></div>
+
+    <table id="resultsTable">
+        <thead>
+            <tr>
+                <th>Destination</th>
+                <th>Count</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <script>
+        const places = [
+            "Taj Mahal, Agra", "Gateway of India, Mumbai", "Hawa Mahal, Jaipur",
+            "Meenakshi Temple, Madurai", "Qutub Minar, Delhi", "Ajanta Caves, Maharashtra",
+            "Goa Beaches, Goa", "Golden Temple, Amritsar", "Mysore Palace, Mysuru",
+            "Jaisalmer Fort, Rajasthan", "Kumarakom, Kerala", "Mahabalipuram, Tamil Nadu",
+            "Kaziranga National Park, Assam", "Tawang Monastery, Arunachal Pradesh",
+            "Mahabodhi Temple, Bodh Gaya", "Dharamshala, Himachal Pradesh",
+            "Ranthambore Fort, Rajasthan", "Wayanad, Kerala", "Kanyakumari, Tamil Nadu",
+            "Patan, Gujarat", "Spiti Valley, Himachal Pradesh", "Kutch, Gujarat",
+            "Gwalior Fort, Madhya Pradesh", "Nashik, Maharashtra", "Kodaikanal, Tamil Nadu",
+            "Agra Fort, Agra", "Kolukkumalai, Tamil Nadu", "Chandni Chowk, Delhi",
+            "Maheshwar, Madhya Pradesh", "Jodhpur, Rajasthan", "Kolkata's Victoria Memorial, Kolkata",
+            "Munnar, Kerala", "Coorg, Karnataka", "Palani, Tamil Nadu",
+            "Kanha National Park, Madhya Pradesh", "Amritsar, Punjab",
+            "Bhopal, Madhya Pradesh", "Ajmer, Rajasthan", "Rishikesh, Uttarakhand",
+            "Diu, Daman and Diu", "Chikmagalur, Karnataka", "Chhatarpur Temple, Delhi",
+            "Kolhapur, Maharashtra", "Murud-Janjira Fort, Maharashtra",
+            "Jaisalmer, Rajasthan", "Gulmarg, Jammu & Kashmir", "Sonmarg, Jammu & Kashmir",
+            "Maheshwar, Madhya Pradesh", "Kumarakom, Kerala", "Nainital, Uttarakhand",
+            "Ranthambore National Park, Rajasthan", "Khajuraho, Madhya Pradesh",
+            "Chennai, Tamil Nadu", "Varanasi, Uttar Pradesh", "Bodh Gaya, Bihar"
+        ];
+
+        let selectionCount = {};
+
+        function selectDestinations() {
+            const numSelections = parseInt(document.getElementById("numSelections").value);
+            if (isNaN(numSelections) || numSelections < 1) {
+                alert("Please enter a valid number greater than 0.");
+                return;
+            }
+
+            // Reset selection counts
+            selectionCount = {};
+            for (const place of places) {
+                selectionCount[place] = 0;
+            }
+
+            // Randomly select destinations
+            for (let i = 0; i < numSelections; i++) {
+                const selectedDestination = places[Math.floor(Math.random() * places.length)];
+                selectionCount[selectedDestination]++;
+            }
+
+            updateResultsTable();
+            showFinalDestination();
+        }
+
+        function updateResultsTable() {
+            const tableBody = document.getElementById("resultsTable").getElementsByTagName("tbody")[0];
+            tableBody.innerHTML = ""; // Clear existing rows
+
+            for (const [destination, count] of Object.entries(selectionCount)) {
+                if (count > 0) { // Only display destinations that were selected
+                    const row = tableBody.insertRow();
+                    row.insertCell(0).textContent = destination;
+                    row.insertCell(1).textContent = count;
+                }
+            }
+        }
+
+        function showFinalDestination() {
+            const finalDestination = Object.keys(selectionCount).reduce((a, b) => selectionCount[a] > selectionCount[b] ? a : b);
+            const finalCount = selectionCount[finalDestination];
+
+            document.getElementById("finalDestination").textContent = `Final Destination: ${finalDestination} (Selected ${finalCount} times)`;
+        }
+    </script>
+</body>
+</html>

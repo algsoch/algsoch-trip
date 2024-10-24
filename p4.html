@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Travel Destination Selector</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .destination {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            margin: 20px 0;
+            animation: fadeIn 2s;
+        }
+        .counts {
+            margin: 20px 0;
+            text-align: left;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Random Travel Destination Selector</h1>
+        <div id="destination" class="destination"></div>
+        <div class="counts">
+            <h2>Selection Counts:</h2>
+            <ul id="selectionCounts"></ul>
+        </div>
+        <button onclick="selectRandomDestination()">Select Random Destination</button>
+    </div>
+
+    <script>
+        const places = [
+            "Goa", "Kerala", "Manali, Himachal Pradesh", "Rajasthan",
+            "Leh-Ladakh, Jammu & Kashmir", "Udaipur, Rajasthan", "Hampi, Karnataka",
+            "Shimla, Himachal Pradesh", "Jaisalmer, Rajasthan", "Andaman Islands",
+            "Varanasi, Uttar Pradesh", "Darjeeling, West Bengal", "Pondicherry, Tamil Nadu",
+            "Khajuraho, Madhya Pradesh", "Rishikesh, Uttarakhand", "Nubra Valley, Ladakh",
+            "Sundarbans, West Bengal", "Bodh Gaya, Bihar", "Golkonda Fort, Hyderabad",
+            "Jim Corbett National Park, Uttarakhand", "Nainital, Uttarakhand", "Kumarakom, Kerala",
+            "Mahabaleshwar, Maharashtra", "Coorg, Karnataka", "Jaisalmer Fort, Rajasthan",
+            "Bikaner, Rajasthan", "Chennai Marina Beach, Tamil Nadu", "Tawang, Arunachal Pradesh",
+            "Shillong, Meghalaya", "Kumarakom Bird Sanctuary, Kerala", "Khajjiar, Himachal Pradesh",
+            "Lansdowne, Uttarakhand", "Udaipur City Palace, Rajasthan", "Panchgani, Maharashtra",
+            "Rani Ki Vav, Gujarat", "Gandhi Ashram, Ahmedabad", "Kaziranga National Park, Assam",
+            "Tawang Monastery, Arunachal Pradesh", "Mahabodhi Temple, Bodh Gaya", "Dharamshala, Himachal Pradesh",
+            "Ranthambore Fort, Rajasthan", "Wayanad, Kerala", "Kanyakumari, Tamil Nadu",
+            "Mahabalipuram, Tamil Nadu", "Patan, Gujarat", "Spiti Valley, Himachal Pradesh",
+            "Kutch, Gujarat", "Gwalior Fort, Madhya Pradesh", "Nashik, Maharashtra",
+            "Kodaikanal, Tamil Nadu", "Agra Fort, Agra", "Kolukkumalai, Tamil Nadu",
+            "Chandni Chowk, Delhi", "Maheshwar, Madhya Pradesh", "Jodhpur, Rajasthan",
+            "Kolkata's Victoria Memorial, Kolkata", "Munnar, Kerala", "Coorg, Karnataka",
+            "Palani, Tamil Nadu", "Kanha National Park, Madhya Pradesh", "Amritsar, Punjab",
+            "Bhopal, Madhya Pradesh", "Ajmer, Rajasthan", "Rishikesh, Uttarakhand",
+            "Tawang, Arunachal Pradesh", "Mahabodhi Temple, Bodh Gaya", "Bhuj, Gujarat",
+            "Diu, Daman and Diu", "Chikmagalur, Karnataka", "Chhatarpur Temple, Delhi",
+            "Rishikesh, Uttarakhand", "Kolhapur, Maharashtra", "Murud-Janjira Fort, Maharashtra",
+            "Jaisalmer, Rajasthan", "Gulmarg, Jammu & Kashmir", "Sonmarg, Jammu & Kashmir",
+            "Maheshwar, Madhya Pradesh", "Kumarakom, Kerala", "Nainital, Uttarakhand",
+            "Ranthambore National Park, Rajasthan", "Khajuraho, Madhya Pradesh", "Chennai, Tamil Nadu",
+            "Varanasi, Uttar Pradesh", "Bodh Gaya, Bihar"
+        ];
+
+        let selectionCount = {};
+
+        function selectRandomDestination() {
+            const randomIndex = Math.floor(Math.random() * places.length);
+            const selectedDestination = places[randomIndex];
+
+            // Update selection count
+            if (selectionCount[selectedDestination]) {
+                selectionCount[selectedDestination]++;
+            } else {
+                selectionCount[selectedDestination] = 1;
+            }
+
+            // Display the selected destination
+            document.getElementById("destination").innerText = `Selected Destination: ${selectedDestination}`;
+
+            // Display selection counts
+            const selectionCountsList = document.getElementById("selectionCounts");
+            selectionCountsList.innerHTML = ""; // Clear previous counts
+            for (const [place, count] of Object.entries(selectionCount)) {
+                const li = document.createElement("li");
+                li.innerText = `${place}: ${count}`;
+                selectionCountsList.appendChild(li);
+            }
+        }
+    </script>
+</body>
+</html>

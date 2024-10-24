@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Famous Places in India</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .place {
+            background: #fff;
+            border-radius: 10px;
+            margin: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+            width: 200px;
+        }
+        .place:hover {
+            transform: scale(1.05);
+        }
+        .selected {
+            background-color: #4CAF50;
+            color: white;
+        }
+        #finalDestination {
+            font-size: 2em;
+            margin-top: 30px;
+            animation: fadeIn 2s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <h1>Select Your Favorite Places in India</h1>
+    <div class="container" id="placesContainer"></div>
+    <button onclick="showFinalDestination()">Show Final Destination</button>
+    <div id="finalDestination"></div>
+
+    <script>
+        const places = [
+            "Taj Mahal, Agra",
+            "Jaipur, Rajasthan",
+            "Goa Beaches, Goa",
+            "Kerala Backwaters, Kerala",
+            "Manali, Himachal Pradesh",
+            "Mysore Palace, Karnataka",
+            "Golden Temple, Amritsar",
+            "Ranthambore National Park, Rajasthan",
+            "Ajanta Caves, Maharashtra",
+            "Udaipur, Rajasthan",
+            "Hampi, Karnataka",
+            "Shimla, Himachal Pradesh",
+            "Leh-Ladakh, Jammu & Kashmir",
+            "Jaisalmer, Rajasthan",
+            "Andaman Islands",
+            "Varanasi, Uttar Pradesh",
+            "Darjeeling, West Bengal",
+            "Pondicherry, Tamil Nadu",
+            "Khajuraho, Madhya Pradesh",
+            "Rishikesh, Uttarakhand",
+            "Nubra Valley, Ladakh",
+            "Sundarbans, West Bengal",
+            "Bodh Gaya, Bihar",
+            "Golkonda Fort, Hyderabad",
+            "Jim Corbett National Park, Uttarakhand",
+            "Nainital, Uttarakhand",
+            "Kumarakom, Kerala",
+            "Mahabaleshwar, Maharashtra",
+            "Coorg, Karnataka",
+            "Jaisalmer Fort, Rajasthan",
+            "Bikaner, Rajasthan",
+            "Chennai Marina Beach, Tamil Nadu",
+            "Tawang, Arunachal Pradesh",
+            "Shillong, Meghalaya",
+            "Kumarakom Bird Sanctuary, Kerala",
+            "Khajjiar, Himachal Pradesh",
+            "Lansdowne, Uttarakhand",
+            "Udaipur City Palace, Rajasthan",
+            "Panchgani, Maharashtra",
+            "Rani Ki Vav, Gujarat",
+            "Gandhi Ashram, Ahmedabad",
+            "Kaziranga National Park, Assam",
+            "Tawang Monastery, Arunachal Pradesh",
+            "Mahabodhi Temple, Bodh Gaya",
+            "Dharamshala, Himachal Pradesh",
+            "Ranthambore Fort, Rajasthan",
+            "Shimla, Himachal Pradesh",
+            "Wayanad, Kerala",
+            "Kanyakumari, Tamil Nadu",
+            "Mahabalipuram, Tamil Nadu",
+            "Patan, Gujarat",
+            "Spiti Valley, Himachal Pradesh",
+            "Kutch, Gujarat",
+            "Gwalior Fort, Madhya Pradesh",
+            "Nashik, Maharashtra",
+            "Kodaikanal, Tamil Nadu",
+            "Agra Fort, Agra",
+            "Kolukkumalai, Tamil Nadu",
+            "Chandni Chowk, Delhi",
+            "Maheshwar, Madhya Pradesh",
+            "Jodhpur, Rajasthan",
+            "Kolkata's Victoria Memorial, Kolkata",
+            "Munnar, Kerala",
+            "Coorg, Karnataka",
+            "Palani, Tamil Nadu",
+            "Kanha National Park, Madhya Pradesh",
+            "Amritsar, Punjab",
+            "Bhopal, Madhya Pradesh",
+            "Ajmer, Rajasthan",
+            "Rishikesh, Uttarakhand",
+            "Tawang, Arunachal Pradesh",
+            "Mahabodhi Temple, Bodh Gaya",
+            "Bhuj, Gujarat",
+            "Diu, Daman and Diu",
+            "Chikmagalur, Karnataka",
+            "Chhatarpur Temple, Delhi",
+            "Rishikesh, Uttarakhand",
+            "Kolhapur, Maharashtra",
+            "Murud-Janjira Fort, Maharashtra",
+            "Jaisalmer, Rajasthan",
+            "Gulmarg, Jammu & Kashmir",
+            "Sonmarg, Jammu & Kashmir",
+            "Maheshwar, Madhya Pradesh",
+            "Kumarakom, Kerala",
+            "Nainital, Uttarakhand",
+            "Ranthambore National Park, Rajasthan",
+            "Khajuraho, Madhya Pradesh",
+            "Chennai, Tamil Nadu",
+            "Varanasi, Uttar Pradesh",
+            "Bodh Gaya, Bihar"
+        ];
+
+        let selectedPlaces = {};
+
+        // Display places
+        const placesContainer = document.getElementById('placesContainer');
+        places.forEach(place => {
+            const placeDiv = document.createElement('div');
+            placeDiv.className = 'place';
+            placeDiv.innerText = place;
+            placeDiv.onclick = () => selectPlace(place, placeDiv);
+            placesContainer.appendChild(placeDiv);
+        });
+
+        function selectPlace(place, placeDiv) {
+            if (selectedPlaces[place]) {
+                selectedPlaces[place]++;
+                placeDiv.classList.remove('selected');
+            } else {
+                selectedPlaces[place] = 1;
+                placeDiv.classList.add('selected');
+            }
+            placeDiv.innerText = `${place} (${selectedPlaces[place]})`;
+        }
+
+        function showFinalDestination() {
+            if (Object.keys(selectedPlaces).length === 0) {
+                alert("No places selected!");
+                return;
+            }
+
+            const finalDestination = Object.keys(selectedPlaces).reduce((a, b) => selectedPlaces[a] > selectedPlaces[b] ? a : b);
+            document.getElementById('finalDestination').innerText = `Final Destination: ${finalDestination}`;
+        }
+    </script>
+</body>
+</html>

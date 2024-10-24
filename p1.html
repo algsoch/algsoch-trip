@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Destination Selector</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        button {
+            padding: 10px 15px;
+            font-size: 16px;
+            margin: 5px;
+            cursor: pointer;
+        }
+        #final-destination {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        #destination-counts {
+            margin-top: 10px;
+            text-align: left;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <h1>Travel Destination Selector</h1>
+    <button onclick="chooseDestination()">Choose a Destination</button>
+    <button onclick="showFinalDestination()">Show Final Destination</button>
+
+    <div id="destination"></div>
+    <div id="final-destination"></div>
+    <div id="destination-counts"></div>
+
+    <script>
+        const places = [
+            "Taj Mahal, Agra",
+            "Jaipur, Rajasthan",
+            "Goa Beaches, Goa",
+            "Kerala Backwaters, Kerala",
+            "Manali, Himachal Pradesh",
+            "Mysore Palace, Karnataka",
+            "Golden Temple, Amritsar",
+            "Ranthambore National Park, Rajasthan",
+            "Ajanta Caves, Maharashtra",
+            "Udaipur, Rajasthan",
+            "Hampi, Karnataka",
+            "Shimla, Himachal Pradesh",
+            "Leh-Ladakh, Jammu & Kashmir",
+            "Jaisalmer, Rajasthan",
+            "Andaman Islands",
+            "Varanasi, Uttar Pradesh",
+            "Darjeeling, West Bengal",
+            "Pondicherry, Tamil Nadu",
+            "Khajuraho, Madhya Pradesh",
+            "Rishikesh, Uttarakhand",
+            "Nubra Valley, Ladakh",
+            "Sundarbans, West Bengal",
+            "Bodh Gaya, Bihar",
+            "Golkonda Fort, Hyderabad",
+            "Jim Corbett National Park, Uttarakhand",
+            "Nainital, Uttarakhand",
+            "Kumarakom, Kerala",
+            "Mahabaleshwar, Maharashtra",
+            "Coorg, Karnataka",
+            "Jaisalmer Fort, Rajasthan",
+            "Bikaner, Rajasthan",
+            "Chennai Marina Beach, Tamil Nadu",
+            "Tawang, Arunachal Pradesh",
+            "Shillong, Meghalaya",
+            "Kumarakom Bird Sanctuary, Kerala",
+            "Khajjiar, Himachal Pradesh",
+            "Lansdowne, Uttarakhand",
+            "Udaipur City Palace, Rajasthan",
+            "Panchgani, Maharashtra",
+            "Rani Ki Vav, Gujarat",
+            "Gandhi Ashram, Ahmedabad",
+            "Kaziranga National Park, Assam",
+            "Tawang Monastery, Arunachal Pradesh",
+            "Mahabodhi Temple, Bodh Gaya",
+            "Dharamshala, Himachal Pradesh",
+            "Ranthambore Fort, Rajasthan",
+            "Shimla, Himachal Pradesh",
+            "Wayanad, Kerala",
+            "Kanyakumari, Tamil Nadu",
+            "Mahabalipuram, Tamil Nadu",
+            "Patan, Gujarat",
+            "Spiti Valley, Himachal Pradesh",
+            "Kutch, Gujarat",
+            "Gwalior Fort, Madhya Pradesh",
+            "Nashik, Maharashtra",
+            "Kodaikanal, Tamil Nadu",
+            "Agra Fort, Agra",
+            "Kolukkumalai, Tamil Nadu",
+            "Chandni Chowk, Delhi",
+            "Maheshwar, Madhya Pradesh",
+            "Jodhpur, Rajasthan",
+            "Kolkata's Victoria Memorial, Kolkata",
+            "Munnar, Kerala",
+            "Coorg, Karnataka",
+            "Palani, Tamil Nadu",
+            "Kanha National Park, Madhya Pradesh",
+            "Amritsar, Punjab",
+            "Bhopal, Madhya Pradesh",
+            "Ajmer, Rajasthan",
+            "Rishikesh, Uttarakhand",
+            "Tawang, Arunachal Pradesh",
+            "Mahabodhi Temple, Bodh Gaya",
+            "Bhuj, Gujarat",
+            "Diu, Daman and Diu",
+            "Chikmagalur, Karnataka",
+            "Chhatarpur Temple, Delhi",
+            "Rishikesh, Uttarakhand",
+            "Kolhapur, Maharashtra",
+            "Murud-Janjira Fort, Maharashtra",
+            "Jaisalmer, Rajasthan",
+            "Gulmarg, Jammu & Kashmir",
+            "Sonmarg, Jammu & Kashmir",
+            "Maheshwar, Madhya Pradesh",
+            "Kumarakom, Kerala",
+            "Nainital, Uttarakhand",
+            "Ranthambore National Park, Rajasthan",
+            "Khajuraho, Madhya Pradesh",
+            "Chennai, Tamil Nadu",
+            "Varanasi, Uttar Pradesh",
+            "Bodh Gaya, Bihar"
+        ];
+
+        const selectedDestinations = [];
+
+        function chooseDestination() {
+            const randomIndex = Math.floor(Math.random() * places.length);
+            const selected = places[randomIndex];
+            selectedDestinations.push(selected);
+            document.getElementById("destination").innerText = "You selected: " + selected;
+        }
+
+        function showFinalDestination() {
+            if (selectedDestinations.length > 0) {
+                const destinationCount = {};
+                selectedDestinations.forEach(destination => {
+                    destinationCount[destination] = (destinationCount[destination] || 0) + 1;
+                });
+
+                const finalDestination = Object.keys(destinationCount).reduce((a, b) => destinationCount[a] > destinationCount[b] ? a : b);
+                document.getElementById("final-destination").innerText = "Final Destination: " + finalDestination;
+
+                // Display the counts of all selected destinations
+                let countsDisplay = "Counts of Selected Destinations:\n";
+                for (const [destination, count] of Object.entries(destinationCount)) {
+                    countsDisplay += `${destination}: ${count}\n`;
+                }
+                document.getElementById("destination-counts").innerText = countsDisplay.replace(/\n/g, "<br>");
+            } else {
+                document.getElementById("final-destination").innerText = "No destinations selected.";
+                document.getElementById("destination-counts").innerText = "";
+            }
+        }
+    </script>
+</body>
+</html>
